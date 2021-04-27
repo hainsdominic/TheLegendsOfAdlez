@@ -1,4 +1,4 @@
 package ca.qc.bdeb.sim202;
 
-public class Tresor {
+public class Tresor extends Tuile{
 }

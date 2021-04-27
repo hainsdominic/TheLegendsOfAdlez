@@ -1,4 +1,4 @@
 package ca.qc.bdeb.sim202;
 
-public class Mur {
+public class Mur extends Tuile{
 }

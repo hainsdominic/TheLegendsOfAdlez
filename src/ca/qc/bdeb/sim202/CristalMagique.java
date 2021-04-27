@@ -1,4 +1,4 @@
 package ca.qc.bdeb.sim202;
 
-public class CristalMagique {
+public class CristalMagique extends Item{
 }

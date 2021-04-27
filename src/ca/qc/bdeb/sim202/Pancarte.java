@@ -1,5 +1,5 @@
 package ca.qc.bdeb.sim202;
 
-public class Pancarte {
+public class Pancarte extends Tuile{
 
 }
