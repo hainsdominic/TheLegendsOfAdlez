@@ -1,5 +1,7 @@
 package ca.qc.bdeb.sim202;
 
-public class Niveau {
+import java.util.ArrayList;
 
+public class Niveau {
+    //a faire
 }

@@ -1,4 +1,9 @@
 package ca.qc.bdeb.sim202;
 
-public class Plancher extends Tuile{
+public class Plancher extends Tuile {
+    public Plancher() {
+        super(true, ' ');
+    }
+
+    public void action() {/* se passe rien */}
 }
