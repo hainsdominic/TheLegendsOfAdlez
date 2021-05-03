@@ -20,5 +20,30 @@ public class Monstre extends Personnage {
         */
     }
 
+    @Override
+    public int getVie() {
+        return super.getVie();
+    }
+
+    @Override
+    public int getForce() {
+        return super.getForce();
+    }
+
+    @Override
+    public void setVie(int vie) {
+        super.setVie(vie);
+    }
+
+
+    @Override
+    public void setPosition(int[] position) {
+        super.setPosition(position);
+    }
+
+    @Override
+    public int[] getPosition() {
+        return super.getPosition();
+    }
 
 }
