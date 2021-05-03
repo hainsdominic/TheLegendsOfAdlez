@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Heros extends Personnage {
     private ArrayList<CristalMagique> cristaux;
 
-    public Heros(int vie, int force) {
-        super(vie, force);
+    public Heros(int[] position, int vie, int force) {
+        super(position, vie, force);
     }
 
     @Override

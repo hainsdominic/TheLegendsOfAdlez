@@ -1,9 +1,9 @@
 package ca.qc.bdeb.sim202;
 
-public class Montre extends Personnage {
+public class Monstre extends Personnage {
 
-    public Montre(int vie, int force) {
-        super(vie, force);
+    public Monstre(int[] position, int vie, int force) {
+        super(position, vie, force);
     }
 
     // @Override ?

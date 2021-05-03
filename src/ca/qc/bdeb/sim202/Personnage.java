@@ -3,8 +3,9 @@ package ca.qc.bdeb.sim202;
 public abstract class Personnage {
     int vie;
     int force;
+    int[] position;
 
-    public Personnage(int vie, int force) {
+    public Personnage(int[] position, int vie, int force) {
         this.vie = vie;
         this.force = force;
     }
