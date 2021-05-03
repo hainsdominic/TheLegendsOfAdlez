@@ -11,7 +11,7 @@ public class Niveau {
     // liste de tuiles
     private Tuile[][] tuiles;
     // liste de monstres
-    private ArrayList<Monstre> monstres = new ArrayList<Monstre>(); //mettre ca en arrayList
+    private ArrayList<Monstre> monstres = new ArrayList<>(); //mettre ca en arrayList
     // Heros
     private Heros heros;
 
@@ -24,6 +24,7 @@ public class Niveau {
             File f = new File("src/ca/qc/bdeb/sim202/"+numero+".txt");
             Scanner r = new Scanner(f);
             int numeroLigne = 0; //numero de la ligne
+            int numeroLignePlateau = 0; //numero de la ligne du plateau de jeu
             boolean lectureNiveau = false; //true si la lecture du plateau est commencee
             int[] tailleNiveau = tailleNiveau(numero);
             // liste de tuiles
@@ -36,32 +37,76 @@ public class Niveau {
                 //premiere ligne = position initiale heros
                 if (numeroLigne == 0) {
                     int[] position = new int[2];
-                    for (int i = 0; i < ligne.split(",").length; i++) {
-                        position[i] = Integer.parseInt(ligne.split(",")[i]);
-                    }
+                    position[0] = Integer.parseInt(ligne.split(",")[1]);
+                    position[1] = Integer.parseInt(ligne.split(",")[0]);
                     this.heros = new Heros(position, 6, 1);
-                }
-
-                //place les tuiles
-                if (ligne.toCharArray()[0] == '#') {
-
                 }
 
                 //place les objets
                 if (ligne.indexOf(':') > 0) { // regarder si la ligne contient un ':'
+                    String data;
+                    int posX;
+                    int posY;
                     switch (ligne.split(":")[0]) {
-                        case "pancarte":
-                            break;
-                        case "tresor":
-                            break;
-                        case "monstre":
-                            break;
-                        case "teleporteur":
-                            break;
+                        case "pancarte" -> {
+                            data = ligne.replace("pancarte:", "");
+                            posX = Integer.parseInt(data.split(",")[0]);
+                            posY = Integer.parseInt(data.split(",")[1]);
+                            String message = data.replace(data.split(",")[0] + "," + data.split(",")[1] + ",", "");
+                            this.tuiles[posY][posX] = new Pancarte(message);
+                        }
+                        case "tresor" -> {
+                            data = ligne.replace("tresor:", "");
+                            posX = Integer.parseInt(data.split(",")[0]);
+                            posY = Integer.parseInt(data.split(",")[1]);
+                            switch (data.split(",")[2]) {
+                                case "PotionVie" -> this.tuiles[posY][posX] = new Tresor(new PotionVie());
+                                case "PotionForce" -> this.tuiles[posY][posX] = new Tresor(new PotionForce());
+                                case "CristalMagique" -> this.tuiles[posY][posX] = new Tresor(new CristalMagique());
+                            }
+                        }
+                        case "teleporteur" -> {
+                            data = ligne.replace("teleporteur:", "");
+                            posX = Integer.parseInt(data.split(",")[0]);
+                            posY = Integer.parseInt(data.split(",")[1]);
+                            int teleportationY = Integer.parseInt(data.split(",")[3]);
+                            int teleportationX = Integer.parseInt(data.split(",")[2]);
+                            int[] teleportation = {teleportationY, teleportationX};
+                            this.tuiles[posY][posX] = new Teleporteur(teleportation);
+                        }
+                        case "monstre" -> {
+                            data = ligne.replace("monstre:", "");
+                            posX = Integer.parseInt(data.split(",")[0]);
+                            posY = Integer.parseInt(data.split(",")[1]);
+                            int[] position = {posY, posX};
+                            int nbVies = Integer.parseInt(data.split(",")[2]);
+                            int force = Integer.parseInt(data.split(",")[3]);
+                            this.monstres.add(new Monstre(position, nbVies, force));
+                        }
                     }
-
                 }
 
+                //place les tuiles
+                if (ligne.toCharArray()[0] == '#') {
+                    //regarde la ligne
+                    //mets chaque caractere dans [][i] jusquau nombre de colonnes
+                    for (int i = 0; i < tailleNiveau[1]; i++) {
+                        switch (ligne.toCharArray()[i]) {
+                            case '#':
+                                if (this.tuiles[numeroLignePlateau][i] == null) {
+                                    this.tuiles[numeroLignePlateau][i] = new Mur();
+                                }
+                                break;
+                            case ' ':
+                                if (this.tuiles[numeroLignePlateau][i] == null) {
+                                    this.tuiles[numeroLignePlateau][i] = new Plancher();
+                                }
+                                break;
+
+                        }
+                    }
+                    numeroLignePlateau++;
+                }
 
                 numeroLigne++;
             }

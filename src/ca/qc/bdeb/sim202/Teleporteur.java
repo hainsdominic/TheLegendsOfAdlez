@@ -1,8 +1,8 @@
 package ca.qc.bdeb.sim202;
 
 public class Teleporteur extends Tuile{
-    private String position;
-    public Teleporteur(String position) {
+    private int[] position;
+    public Teleporteur(int[] position) {
         super(true, '*');
         this.position = position;
     }
