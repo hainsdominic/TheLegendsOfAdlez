@@ -8,6 +8,7 @@ public abstract class Personnage {
     public Personnage(int[] position, int vie, int force) {
         this.vie = vie;
         this.force = force;
+        this.position = position;
     }
 
     public int getVie() {
@@ -24,5 +25,13 @@ public abstract class Personnage {
 
     public void setForce(int force) {
         this.force = force;
+    }
+
+    public int[] getPosition() {
+        return position;
+    }
+
+    public void setPosition(int[] position) {
+        this.position = position;
     }
 }

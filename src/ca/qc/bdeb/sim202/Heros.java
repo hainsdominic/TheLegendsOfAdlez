@@ -26,8 +26,20 @@ public class Heros extends Personnage {
 
     @Override
     public void setForce(int force) {
-        super.setVie(force);
+        super.setForce(force);
     }
+
+    @Override
+    public void setPosition(int[] position) {
+        super.setPosition(position);
+    }
+
+    @Override
+    public int[] getPosition() {
+        return super.getPosition();
+    }
+
+
 
     public ArrayList<CristalMagique> getCristaux() {
         return cristaux;
