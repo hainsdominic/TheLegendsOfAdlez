@@ -1,4 +1,4 @@
-# TheLegendsOfAdlez
+# The Legends Of Adlez
 
 Petit jeu en ligne de commande inspiré de The
 Legend of Zelda et des jeux Roguelike.
