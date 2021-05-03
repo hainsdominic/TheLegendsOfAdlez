@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        Niveau niveau = new Niveau(4);
+        Niveau niveau = new Niveau(1);
         afficherPlateau(niveau);
 
     }

@@ -52,7 +52,7 @@ public class Niveau {
                             data = ligne.replace("pancarte:", "");
                             posX = Integer.parseInt(data.split(",")[0]);
                             posY = Integer.parseInt(data.split(",")[1]);
-                            String message = data.replace(data.split(",")[0] + "," + data.split(",")[1] + ",", "");
+                            String message = data.replace(posX + "," + posY  + ",", "");
                             this.tuiles[posY][posX] = new Pancarte(message);
                         }
                         case "tresor" -> {
