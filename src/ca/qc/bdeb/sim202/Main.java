@@ -10,6 +10,10 @@ public class Main {
 
     }
 
+    /**
+     * Affiche le niveau dans la console
+     * @param niveau Niveau a afficher
+     */
     public static void afficherPlateau(Niveau niveau) {
         Tuile[][] tuiles = niveau.getTuiles();
         int[][] positionMonstres = new int[niveau.getMonstres().size()][2];

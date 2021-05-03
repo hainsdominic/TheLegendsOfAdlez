@@ -16,7 +16,7 @@ public class Niveau {
     private Heros heros;
 
     /**
-     * Lis le niveau et remplis les attributs requis
+     * Construis le niveau et remplis les attributs requis
      * @param numero le numero du niveau
      */
     public Niveau(int numero) {
