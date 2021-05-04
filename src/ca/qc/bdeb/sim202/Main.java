@@ -8,6 +8,15 @@ public class Main {
         Niveau niveau = new Niveau(6);
         afficherPlateau(niveau);
 
+        /*
+        On affiche l’état du jeu sur la console
+        Adlez effectue une action (page 4. Controle de adlez)
+            transformer string touche en array de char (toCharArray)
+        Les monstres font leur action
+        On vérifie si on doit passer au prochain niveau, si la partie est gagnée/perdue
+        On recommence jusqu’à la fin de partie
+        */
+
     }
 
     /**
