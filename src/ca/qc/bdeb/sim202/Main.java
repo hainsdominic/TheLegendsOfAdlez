@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        Niveau niveau = new Niveau(1);
+        Niveau niveau = new Niveau(6);
         afficherPlateau(niveau);
 
     }
@@ -32,6 +32,7 @@ public class Main {
                         symbole = '@';
                         break;
                     }
+                if (niveau.getHeros().getPosition()[0] == i && niveau.getHeros().getPosition()[1] == j) symbole = '&';
                 System.out.print(symbole);
             }
 
