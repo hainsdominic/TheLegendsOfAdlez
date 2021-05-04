@@ -7,5 +7,7 @@ public class Teleporteur extends Tuile{
         this.position = position;
     }
 
-    public void action() {/* teleporter adlez a un endroit */}
+    public int[] getPosition() {
+        return position;
+    }
 }

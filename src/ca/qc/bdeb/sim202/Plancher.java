@@ -4,6 +4,4 @@ public class Plancher extends Tuile {
     public Plancher() {
         super(true, ' ');
     }
-
-    public void action() {/* se passe rien */}
 }

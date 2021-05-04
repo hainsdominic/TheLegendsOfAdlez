@@ -15,7 +15,7 @@ public class Heros extends Personnage {
     }
 
     public void ajouterCristal(CristalMagique cristal) {
-        //ajouter a cristaux
+        cristaux.add(cristal);
     }
 
     public void action(char coup, Tuile[][] plateau) {
@@ -47,31 +47,60 @@ public class Heros extends Personnage {
                 }
                 break;
             case 'c':
+                action(plateau, position);
                 break;
             case 'x':
                 break;
         }
-        /*
-        for qui prend chaque char et qui fait une action dans un switch
+    }
 
-        [
-        w:déplace Adlez une case vers le haut
-        a:déplace Adlez une case vers la gauche
-        s:déplace Adlez une case vers le bas
-        d: déplace Adlez une case vers la droite
-        c: bouton d'action
-            Une "action" a un effet sur tous les éléments proches de Adelez
-            Ça inclut :
-            - Lire une pancarte
-            - Ouvrir un trésor
-            - Utiliser un téléporteur
-        x: attaque tous les monstres dans le voisinage de Adlez
-            Adlez est une guerrière féroce : elle attaque dans un voisinage de 9
-            cases, incluant haut/bas/gauche/droite + les 4 diagonales + la case
-            sur laquelle Adlez se trouve (si jamais un monstre est sur la même
-            case que Adlez)
-        q: quitte le jeu
-        ]
-        */
+    private void action(Tuile[][] plateau, int[] position) {
+        //faire un array de toutes les cases autour
+        Tuile[] tuilesProche = new Tuile[9];
+        tuilesProche[0] = plateau[position[0]+1][position[1]+1];
+        tuilesProche[1] = plateau[position[0]-1][position[1]-1];
+        tuilesProche[2] = plateau[position[0]+1][position[1]-1];
+        tuilesProche[3] = plateau[position[0]-1][position[1]+1];
+        tuilesProche[4] = plateau[position[0]][position[1]+1];
+        tuilesProche[5] = plateau[position[0]][position[1]-1];
+        tuilesProche[6] = plateau[position[0]+1][position[1]];
+        tuilesProche[7] = plateau[position[0]-1][position[1]];
+        tuilesProche[8] = plateau[position[0]][position[1]];
+
+        //loop et faire leurs actions
+        for (Tuile tuile : tuilesProche) {
+            switch (tuile.getSymbole()) {
+                case '$' -> {
+                    // si c'est un tresor on get l'item
+                    // et on utilise l'item
+                    Tresor tresor = (Tresor) tuile;
+                    switch (tresor.getItem().getType()) {
+                        case "CristalMagique" -> {
+                            System.out.println("Le tresor contient un cristal magique, prochain niveau!");
+                            this.ajouterCristal((CristalMagique) tresor.getItem());
+                        }
+                        case "PotionVie" -> {
+                            System.out.println("Le tresor contient une potion de vie");
+                            this.setVie(6);
+                        }
+                        case "PotionForce" -> {
+                            System.out.println("Le tresor contient une potion de force");
+                            this.setForce(getForce() + 1);
+                        }
+                    }
+                }
+                case '!' -> {
+                    // si c'est une pancarte on la lis
+                    Pancarte pancarte = (Pancarte) tuile;
+                    pancarte.lire();
+                }
+                case '*' -> {
+                    // si c'est un tp on get position
+                    Teleporteur teleporteur = (Teleporteur) tuile;
+                    super.setPosition(teleporteur.getPosition());
+                }
+            }
+
+        }
     }
 }

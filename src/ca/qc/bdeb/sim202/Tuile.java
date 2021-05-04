@@ -13,8 +13,6 @@ public abstract class Tuile {
         return marchable;
     }
 
-    public abstract void action();
-
     public char getSymbole() {
         return symbole;
     }

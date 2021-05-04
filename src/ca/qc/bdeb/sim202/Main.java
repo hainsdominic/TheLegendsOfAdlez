@@ -15,6 +15,7 @@ public class Main {
             if (niveau == null || niveau.getNumero() != numeroNiveau) {
                 niveau = new Niveau(numeroNiveau, heros);
             }
+            afficherEtat(niveau.getHeros());
             afficherPlateau(niveau);
 
             for (char commande : getCommandes()) {
@@ -27,10 +28,10 @@ public class Main {
 
                 if (niveau.getHeros().getCristaux().size() == numeroNiveau) {
                     heros = niveau.getHeros();
-                    numeroNiveau++;
-                    if (numeroNiveau == 7){
+                    if (numeroNiveau == 6){
                         gagnee = true;
                     }
+                    numeroNiveau++;
                 }
             }
 
@@ -118,6 +119,13 @@ public class Main {
 
             System.out.print('\n');
         }
+    }
+
+    public static void afficherEtat(Heros heros){
+        int vie = heros.getVie();
+        int force = heros.getForce();
+        int nbCristaux = heros.getCristaux().size();
+        System.out.println("Vies: "+vie+" Force: " +force+" Cristaux: "+heros.getCristaux().size());
     }
 
 
