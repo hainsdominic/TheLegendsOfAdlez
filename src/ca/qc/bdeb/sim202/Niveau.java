@@ -19,7 +19,7 @@ public class Niveau {
      * Construis le niveau et remplis les attributs requis
      * @param numero le numero du niveau
      */
-    public Niveau(int numero) {
+    public Niveau(int numero, Heros heros) {
         try {
             File f = new File("src/ca/qc/bdeb/sim202/"+numero+".txt");
             Scanner r = new Scanner(f);
@@ -39,7 +39,13 @@ public class Niveau {
                     int[] position = new int[2];
                     position[0] = Integer.parseInt(ligne.split(",")[1]);
                     position[1] = Integer.parseInt(ligne.split(",")[0]);
-                    this.heros = new Heros(position, 6, 1);
+                    if (heros == null) {
+                        this.heros = new Heros(position, 6, 1);
+                    } else {
+                        this.heros = heros;
+                        heros.setPosition(position);
+                    }
+
                 }
 
                 //place les objets
@@ -146,6 +152,10 @@ public class Niveau {
             System.out.println("Fichier introuvable.");
         }
         return null;
+    }
+
+    public void bougerMonstres() {
+
     }
 
     public int getNumero() {

@@ -7,6 +7,7 @@ public class Heros extends Personnage {
 
     public Heros(int[] position, int vie, int force) {
         super(position, vie, force);
+        this.cristaux = new ArrayList<>();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class Heros extends Personnage {
         //ajouter a cristaux
     }
 
-    public void deplacer(char touche) {
+    public void action(char touche) {
         /*
         for qui prend chaque char et qui fait une action dans un switch
 

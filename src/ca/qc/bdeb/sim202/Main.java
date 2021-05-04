@@ -1,22 +1,93 @@
 package ca.qc.bdeb.sim202;
-
-import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Niveau niveau = new Niveau(6);
-        afficherPlateau(niveau);
+        Niveau niveau = null;
+        Heros heros = null; //stocke le heros du niveau precedent
+        int numeroNiveau = 1; //numero du niveau
+        boolean perdue = false;
+        boolean gagnee = false;
+        
+        do {
+            if (niveau == null || niveau.getNumero() != numeroNiveau) {
+                niveau = new Niveau(numeroNiveau, heros);
+            }
+            afficherPlateau(niveau);
 
-        /*
-        On affiche l’état du jeu sur la console
-        Adlez effectue une action (page 4. Controle de adlez)
-            transformer string touche en array de char (toCharArray)
-        Les monstres font leur action
-        On vérifie si on doit passer au prochain niveau, si la partie est gagnée/perdue
-        On recommence jusqu’à la fin de partie
-        */
+            for (char commande : getCommandes()) {
+                niveau.getHeros().action(commande);
+                niveau.bougerMonstres();
 
+                if (niveau.getHeros().getVie() < 1) { //check si adlez est encore vivant
+                    perdue = true;
+                }
+
+                if (niveau.getHeros().getCristaux().size() == numeroNiveau) {
+                    heros = niveau.getHeros();
+                    numeroNiveau++;
+                    if (numeroNiveau == 7){
+                        gagnee = true;
+                    }
+                }
+            }
+
+
+        } while (!perdue && !gagnee);
+
+        if (gagnee){
+            System.out.println("Partie gagnee");
+        } else {
+            System.out.println("Partie perdue");
+        }
+    }
+
+    /**
+     * Demande a l'utilisateur les commandes et les verifies
+     * @return la liste des commandes entrees par l'utilisateur
+     */
+    public static char[] getCommandes() {
+        boolean erreur = true;
+        char[] listeCoups = null;
+        do{ //get les mouvements de l'utilisateur
+            try {
+                Scanner input = new Scanner(System.in);  // Create a Scanner object
+                System.out.print("Entrez vos coups: ");
+                String coups = input.nextLine();
+                erreur = false;
+                if (coups.equals("")) {
+                    System.out.println("SVP jouer un coup");
+                    erreur = true;
+                }
+                if (!erreur) {
+                    listeCoups = coups.toCharArray();
+                    for (char coup: listeCoups) {
+                        switch (coup) {
+                            case 'w':
+                            case 'a':
+                            case 's':
+                            case 'd':
+                            case 'c':
+                            case 'x':
+                                break;
+                            case 'q':
+                                System.exit(0);
+                                break;
+                            default:
+                                System.out.println( "'"+coup+"'"+" est un coup invalide");
+                                erreur = true;
+                        }
+
+                    }
+                }
+            } catch (InputMismatchException e){
+                System.out.println("Commandes invalides");
+            }
+        }while (erreur);
+        
+        return listeCoups;
     }
 
     /**
