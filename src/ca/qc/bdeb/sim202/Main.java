@@ -10,7 +10,9 @@ public class Main {
         int numeroNiveau = 1; //numero du niveau
         boolean perdue = false;
         boolean gagnee = false;
-        
+
+        Messages.afficherIntro();
+
         do {
             if (niveau == null || niveau.getNumero() != numeroNiveau) {
                 niveau = new Niveau(numeroNiveau, heros);
@@ -39,9 +41,9 @@ public class Main {
         } while (!perdue && !gagnee);
 
         if (gagnee){
-            System.out.println("Partie gagnee");
+            Messages.afficherVictoire();
         } else {
-            System.out.println("Partie perdue");
+            Messages.afficherDefaite();
         }
     }
 
@@ -121,6 +123,10 @@ public class Main {
         }
     }
 
+    /**
+     * affiche l'etat du heros
+     * @param heros heros dont on veut afficher l'information
+     */
     public static void afficherEtat(Heros heros){
         int vie = heros.getVie();
         int force = heros.getForce();

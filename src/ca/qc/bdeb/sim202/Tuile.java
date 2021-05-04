@@ -9,6 +9,9 @@ public abstract class Tuile {
         this.symbole = symbole;
     }
 
+    /**
+     * @return si le heros peut marcher sur la tuile
+     */
     public boolean isMarchable() {
         return marchable;
     }

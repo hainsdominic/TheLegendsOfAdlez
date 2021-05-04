@@ -7,6 +7,9 @@ public class Teleporteur extends Tuile{
         this.position = position;
     }
 
+    /**
+     * @return la position finale du heros apres teleportation
+     */
     public int[] getPosition() {
         return position;
     }

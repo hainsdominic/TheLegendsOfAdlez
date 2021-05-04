@@ -7,6 +7,9 @@ public class Pancarte extends Tuile{
         this.message = message;
     }
 
+    /**
+     * Lis ce qui est ecris sur la pancarte
+     */
     public void lire() {
         System.out.println("Est ecris sur la pancarte: ");
         System.out.println(message);

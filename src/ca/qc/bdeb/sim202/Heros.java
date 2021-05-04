@@ -3,11 +3,10 @@ package ca.qc.bdeb.sim202;
 import java.util.ArrayList;
 
 public class Heros extends Personnage {
-    private ArrayList<CristalMagique> cristaux;
+    private ArrayList<CristalMagique> cristaux = new ArrayList<>();
 
     public Heros(int[] position, int vie, int force) {
         super(position, vie, force);
-        this.cristaux = new ArrayList<>();
     }
 
     public ArrayList<CristalMagique> getCristaux() {
@@ -18,6 +17,11 @@ public class Heros extends Personnage {
         cristaux.add(cristal);
     }
 
+    /**
+     * Effectue une action selon la touche choisie par le joueur
+     * @param coup touche choisie
+     * @param plateau plateau de jeu
+     */
     public void action(char coup, Tuile[][] plateau) {
         int[] position = super.getPosition();
         int[] nouvellePosition = {position[0], position[1]};
@@ -47,14 +51,19 @@ public class Heros extends Personnage {
                 }
                 break;
             case 'c':
-                action(plateau, position);
+                interaction(plateau, position);
                 break;
             case 'x':
                 break;
         }
     }
 
-    private void action(Tuile[][] plateau, int[] position) {
+    /**
+     * Interagis avec les objets autour ou sur le heros
+     * @param plateau plateau de jeu
+     * @param position position du heros
+     */
+    private void interaction(Tuile[][] plateau, int[] position) {
         //faire un array de toutes les cases autour
         Tuile[] tuilesProche = new Tuile[9];
         tuilesProche[0] = plateau[position[0]+1][position[1]+1];

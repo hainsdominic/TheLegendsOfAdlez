@@ -174,20 +174,4 @@ public class Niveau {
     public Heros getHeros() {
         return heros;
     }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
-    public void setTuiles(Tuile[][] tuiles) {
-        this.tuiles = tuiles;
-    }
-
-    public void setMonstres(ArrayList<Monstre> monstres) {
-        this.monstres = monstres;
-    }
-
-    public void setHeros(Heros heros) {
-        this.heros = heros;
-    }
 }
