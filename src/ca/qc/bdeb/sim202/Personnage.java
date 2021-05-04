@@ -31,7 +31,7 @@ public abstract class Personnage {
         return position;
     }
 
-    public void setPosition(int[] position) {
-        this.position = position;
+    public void setPosition(int[] nouvellePosition) {
+        this.position = nouvellePosition;
     }
 }

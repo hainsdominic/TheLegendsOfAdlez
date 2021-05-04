@@ -10,38 +10,6 @@ public class Heros extends Personnage {
         this.cristaux = new ArrayList<>();
     }
 
-    @Override
-    public int getVie() {
-        return super.getVie();
-    }
-
-    @Override
-    public int getForce() {
-        return super.getForce();
-    }
-
-    @Override
-    public void setVie(int vie) {
-        super.setVie(vie);
-    }
-
-    @Override
-    public void setForce(int force) {
-        super.setForce(force);
-    }
-
-    @Override
-    public void setPosition(int[] position) {
-        super.setPosition(position);
-    }
-
-    @Override
-    public int[] getPosition() {
-        return super.getPosition();
-    }
-
-
-
     public ArrayList<CristalMagique> getCristaux() {
         return cristaux;
     }
@@ -50,7 +18,39 @@ public class Heros extends Personnage {
         //ajouter a cristaux
     }
 
-    public void action(char touche) {
+    public void action(char coup, Tuile[][] plateau) {
+        int[] position = super.getPosition();
+        int[] nouvellePosition = {position[0], position[1]};
+        switch (coup) {
+            case 'w':
+                nouvellePosition[0]--;
+                if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
+                    super.setPosition(nouvellePosition);
+                }
+                break;
+            case 'a':
+                nouvellePosition[1]--;
+                if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
+                    super.setPosition(nouvellePosition);
+                }
+                break;
+            case 's':
+                nouvellePosition[0]++;
+                if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
+                    super.setPosition(nouvellePosition);
+                }
+                break;
+            case 'd':
+                nouvellePosition[1]++;
+                if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
+                    super.setPosition(nouvellePosition);
+                }
+                break;
+            case 'c':
+                break;
+            case 'x':
+                break;
+        }
         /*
         for qui prend chaque char et qui fait une action dans un switch
 

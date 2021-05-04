@@ -18,7 +18,7 @@ public class Main {
             afficherPlateau(niveau);
 
             for (char commande : getCommandes()) {
-                niveau.getHeros().action(commande);
+                niveau.getHeros().action(commande, niveau.getTuiles());
                 niveau.bougerMonstres();
 
                 if (niveau.getHeros().getVie() < 1) { //check si adlez est encore vivant

@@ -20,6 +20,7 @@ public class Niveau {
      * @param numero le numero du niveau
      */
     public Niveau(int numero, Heros heros) {
+        this.numero = numero;
         try {
             File f = new File("src/ca/qc/bdeb/sim202/"+numero+".txt");
             Scanner r = new Scanner(f);

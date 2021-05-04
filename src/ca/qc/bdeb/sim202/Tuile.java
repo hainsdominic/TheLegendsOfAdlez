@@ -9,6 +9,10 @@ public abstract class Tuile {
         this.symbole = symbole;
     }
 
+    public boolean isMarchable() {
+        return marchable;
+    }
+
     public abstract void action();
 
     public char getSymbole() {
