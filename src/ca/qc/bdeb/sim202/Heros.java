@@ -23,7 +23,7 @@ public class Heros extends Personnage {
      * @param coup touche choisie
      * @param plateau plateau de jeu
      */
-    public void action(char coup, Tuile[][] plateau) {
+    public void action(char coup, Tuile[][] plateau, ArrayList<Monstre> monstre) {
         int[] position = super.getPosition();
         int[] nouvellePosition = {position[0], position[1]};
         switch (coup) {
@@ -52,7 +52,7 @@ public class Heros extends Personnage {
                 }
                 break;
             case 'c':
-                interaction(plateau, position);
+                interaction(plateau, position, monstre);
                 break;
             case 'x':
                 break;
@@ -64,7 +64,7 @@ public class Heros extends Personnage {
      * @param plateau plateau de jeu
      * @param position position du heros
      */
-    private void interaction(Tuile[][] plateau, int[] position) {
+    private void interaction(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstres) {
         //faire un array de toutes les cases autour
         Tuile[] tuilesProche = new Tuile[9];
         tuilesProche[0] = plateau[position[0]+1][position[1]+1];
@@ -111,12 +111,21 @@ public class Heros extends Personnage {
                     Teleporteur teleporteur = (Teleporteur) tuile;
                     super.setPosition(teleporteur.getPosition());
                 }
-                case '@' -> {
-                   Monstre monstre;
-                  // monstre.setVie(monstre.getVie()-getForce());
-                }
             }
+        }
+        interact(plateau, position, monstres);
+    }
 
+    public void interact(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstre) {
+
+        int[] herosPosition = getPosition();
+        for (int i = 0; i <= monstre.size(); i++) {
+
+        if ( ((herosPosition[0] - monstre.get(i).getPosition()[0]) <= 1 && 1 >= (monstre.get(i).getPosition()[0] - herosPosition[0]))
+                && ((herosPosition[1] - monstre.get(i).getPosition()[1]) <= 1 && 1 >= (monstre.get(i).getPosition()[1] - herosPosition[1])) ) {
+            monstre.get(i).setVie(monstre.get(i).getVie()-getForce());
+
+        }
         }
     }
 

@@ -17,6 +17,7 @@ public class Main {
         Messages.afficherIntro();
 
         do {
+           // niveau = serialiazer();
             if (niveau == null || niveau.getNumero() != numeroNiveau) {
                 niveau = new Niveau(numeroNiveau, heros);
             }
@@ -24,7 +25,7 @@ public class Main {
             afficherPlateau(niveau);
 
             for (char commande : getCommandes()) {
-                niveau.getHeros().action(commande, niveau.getTuiles());
+                niveau.getHeros().action(commande, niveau.getTuiles(), niveau.getMonstres());
                 niveau.bougerMonstres(niveau.getTuiles());
 
                 if (niveau.getHeros().getVie() < 1) { //check si adlez est encore vivant

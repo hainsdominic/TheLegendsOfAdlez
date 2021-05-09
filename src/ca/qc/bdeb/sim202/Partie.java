@@ -1,6 +1,8 @@
 package ca.qc.bdeb.sim202;
 
-public class Partie {
+import java.io.*;
+
+public class Partie implements Serializable {
     /*
     To do
 
@@ -10,8 +12,42 @@ public class Partie {
     ***Done*** Monstres déplacement
     Monstres interaction
     Fonction attaquer pour héros
-    Erreur trésor
-     */
 
+        Java doc
+
+     */
+    private static Partie lireBinaire() {
+        Partie partie = null;
+        String nomfichier = "partie.sav";
+        ObjectInputStream ois = null;
+
+        try {
+            ois = new ObjectInputStream(new FileInputStream(nomfichier));
+            partie = (Partie) ois.readObject();
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Une erreur est survenue.");
+            System.exit(0);
+        }
+        return partie;
+    }
+
+    private static void ecrireBinaire(Partie partie) {
+        File file = new File("partie.sav");
+        ObjectOutputStream oos = null;
+        FileOutputStream fos = null;
+
+        try {
+            fos = new FileOutputStream(file, false);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(partie);
+            oos.flush();
+            oos.close();
+        } catch (IOException e) {
+            System.out.println("Erreur");
+            System.exit(1);
+        }
+        System.exit(0);
+    }
 
 }
