@@ -116,17 +116,17 @@ public class Heros extends Personnage {
         attaque(plateau, position, monstres);
     }
 
-    public void attaque(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstre) {
+    public void attaque(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstres) {
 
         int[] herosPosition = getPosition();
-        for (int i = 0; i <= monstre.size(); i++) {
 
-        if ( ((herosPosition[0] - monstre.get(i).getPosition()[0]) <= 1 && 1 >= (monstre.get(i).getPosition()[0] - herosPosition[0]))
-                && ((herosPosition[1] - monstre.get(i).getPosition()[1]) <= 1 && 1 >= (monstre.get(i).getPosition()[1] - herosPosition[1])) ) {
-            monstre.get(i).setVie(monstre.get(i).getVie()-getForce());
+        monstres.forEach((monstre) -> {
+            if ( ((herosPosition[0] - monstre.getPosition()[0]) <= 1 && 1 >= (monstre.getPosition()[0] - herosPosition[0]))
+                    && ((herosPosition[1] - monstre.getPosition()[1]) <= 1 && 1 >= (monstre.getPosition()[1] - herosPosition[1])) ) {
+                monstre.setVie(monstre.getVie()-getForce());
 
-        }
-        }
+            }
+        });
     }
 
 }
