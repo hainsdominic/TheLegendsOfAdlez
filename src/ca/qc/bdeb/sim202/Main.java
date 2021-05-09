@@ -1,4 +1,7 @@
 package ca.qc.bdeb.sim202;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -22,7 +25,7 @@ public class Main {
 
             for (char commande : getCommandes()) {
                 niveau.getHeros().action(commande, niveau.getTuiles());
-                niveau.bougerMonstres();
+                niveau.bougerMonstres(niveau.getTuiles());
 
                 if (niveau.getHeros().getVie() < 1) { //check si adlez est encore vivant
                     perdue = true;
@@ -76,6 +79,20 @@ public class Main {
                             case 'x':
                                 break;
                             case 'q':
+                                System.out.println("Sauvegarde de la partie!");
+                                try {
+                                    ObjectOutputStream ecrire =
+                                            new ObjectOutputStream(new FileOutputStream("Zelda.dat"));
+                                   // ecrire.writeObject(niveau);
+
+                                    ecrire.close();
+                                } catch (IOException e) {
+                                    System.out.println("Erreur d'entrées-sorties");
+
+                                //} catch (ClassNotFoundException e) {
+                                    System.out.println("Erreur classe introuvable");
+
+                                }
                                 System.exit(0);
                                 break;
                             default:

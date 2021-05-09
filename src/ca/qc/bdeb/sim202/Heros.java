@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim202;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Heros extends Personnage {
     private ArrayList<CristalMagique> cristaux = new ArrayList<>();
@@ -83,17 +84,19 @@ public class Heros extends Personnage {
                     // si c'est un tresor on get l'item
                     // et on utilise l'item
                     Tresor tresor = (Tresor) tuile;
+
                     switch (tresor.getItem().getType()) {
                         case "CristalMagique" -> {
-                            System.out.println("Le tresor contient un cristal magique, prochain niveau!");
+                            System.out.println(tresor.getItem().getInfo());
                             this.ajouterCristal((CristalMagique) tresor.getItem());
                         }
                         case "PotionVie" -> {
-                            System.out.println("Le tresor contient une potion de vie");
+                            System.out.println(tresor.getItem().getInfo());
                             this.setVie(6);
                         }
                         case "PotionForce" -> {
                             System.out.println("Le tresor contient une potion de force");
+                            System.out.println(tresor.getItem().getInfo());
                             this.setForce(getForce() + 1);
                         }
                     }
@@ -108,8 +111,13 @@ public class Heros extends Personnage {
                     Teleporteur teleporteur = (Teleporteur) tuile;
                     super.setPosition(teleporteur.getPosition());
                 }
+                case '@' -> {
+                   Monstre monstre;
+                  // monstre.setVie(monstre.getVie()-getForce());
+                }
             }
 
         }
     }
+
 }
