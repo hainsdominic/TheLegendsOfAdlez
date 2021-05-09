@@ -20,4 +20,7 @@ public abstract class Tuile {
         return symbole;
     }
 
+    public void setSymbole(char symbole) {
+        this.symbole = symbole;
+    }
 }
