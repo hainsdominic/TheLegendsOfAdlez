@@ -113,10 +113,10 @@ public class Heros extends Personnage {
                 }
             }
         }
-        interact(plateau, position, monstres);
+        attaque(plateau, position, monstres);
     }
 
-    public void interact(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstre) {
+    public void attaque(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstre) {
 
         int[] herosPosition = getPosition();
         for (int i = 0; i <= monstre.size(); i++) {
