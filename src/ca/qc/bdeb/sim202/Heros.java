@@ -155,12 +155,15 @@ public class Heros extends Personnage {
                 break;
             }
         }
-        for (int i = 0, monstresSize = monstres.size(); i < monstresSize; i++) {
-            Monstre monstre = monstres.get(i);
-            if (monstre.getVie() == 0) {
-                monstres.remove(i);
+        if (!(monstres.size() == 0)) {
+            for (int i = 0; i < monstres.size(); i++) {
+                Monstre monstre = monstres.get(i);
+                if (monstre.getVie() == 0) {
+                    monstres.remove(i);
+                }
             }
         }
+
     }
 
 }
