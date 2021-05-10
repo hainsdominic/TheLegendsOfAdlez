@@ -7,7 +7,7 @@ public abstract class Personnage implements Serializable {
     private int force;
     private int[] position;
 
-    public Personnage(int[] position, int vie, int force) {
+    public Personnage(int[] position, int vie, int force) { // Un personnage a de la vie, de la force e une position
         this.vie = vie;
         this.force = force;
         this.position = position;

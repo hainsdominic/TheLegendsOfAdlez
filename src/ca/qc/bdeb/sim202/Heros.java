@@ -11,10 +11,14 @@ public class Heros extends Personnage {
         super(position, vie, force);
     }
 
-    public ArrayList<CristalMagique> getCristaux() {
+    public ArrayList<CristalMagique> getCristaux() { // Nombre de cristal magique porté par le héros
         return cristaux;
     }
 
+    /**
+     * Permet d'ajouter un cristal magique que le héros a sur lui
+     * @param cristal
+     */
     public void ajouterCristal(CristalMagique cristal) {
         cristaux.add(cristal);
     }
@@ -28,32 +32,32 @@ public class Heros extends Personnage {
         int[] position = super.getPosition();
         int[] nouvellePosition = {position[0], position[1]};
         switch (coup) {
-            case 'w' -> {
+            case 'w' -> { // Se déplace vers le haut
                 nouvellePosition[0]--;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
             }
-            case 'a' -> {
+            case 'a' -> { // Se déplace vers la gauche
                 nouvellePosition[1]--;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
             }
-            case 's' -> {
+            case 's' -> { // Se déplace vers la droite
                 nouvellePosition[0]++;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
             }
-            case 'd' -> {
+            case 'd' -> { // Se déplace vers le bas
                 nouvellePosition[1]++;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
             }
-            case 'c' -> interaction(plateau, position, monstres);
-            case 'x' -> attaque(position, monstres);
+            case 'c' -> interaction(plateau, position, monstres); // Interagis aves les tuiles
+            case 'x' -> attaque(position, monstres); // Attaque les monstres
         }
     }
 
@@ -63,7 +67,7 @@ public class Heros extends Personnage {
      * @param position position du heros
      */
     private void interaction(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstres) {
-        //faire un array de toutes les cases autour
+        //faire un array de toutes les cases autour dans un périmètre de 1 case
         Tuile[] tuilesProche = new Tuile[9];
         tuilesProche[0] = plateau[position[0]+1][position[1]+1];
         tuilesProche[1] = plateau[position[0]-1][position[1]-1];
@@ -114,6 +118,11 @@ public class Heros extends Personnage {
 
     }
 
+    /**
+     * Cette méthode regarde autour du héros pour savoir si son attaque touche un monstre ou non
+     * @param positionHeros La position du héros sur le plateau
+     * @param monstres Le nombre de monstres qu'il y a dans un niveau
+     */
     public void attaque(int[] positionHeros, ArrayList<Monstre> monstres) {
 
         for (Monstre monstre : monstres) {
@@ -155,6 +164,7 @@ public class Heros extends Personnage {
                 break;
             }
         }
+        // Raye le monstre de la carte lorsque sa vie = 0
         if (!(monstres.size() == 0)) {
             for (int i = 0; i < monstres.size(); i++) {
                 Monstre monstre = monstres.get(i);

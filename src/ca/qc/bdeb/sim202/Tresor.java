@@ -9,7 +9,7 @@ public class Tresor extends Tuile {
     }
 
     public Item getItem() {
-        super.setSymbole('_');
+        super.setSymbole('_');// Change le symbole du trésor l'orsqu'il est ouvert
         return item;
     }
 }

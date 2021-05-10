@@ -54,14 +54,14 @@ public class Niveau implements Serializable {
                     int posX;
                     int posY;
                     switch (ligne.split(":")[0]) {
-                        case "pancarte" -> {
+                        case "pancarte" -> { // Permet d'introduire la pancarte au bon endroit dans le niveau
                             data = ligne.replace("pancarte:", "");
                             posX = Integer.parseInt(data.split(",")[0]);
                             posY = Integer.parseInt(data.split(",")[1]);
                             String message = data.replace(posX + "," + posY  + ",", "");
                             this.tuiles[posY][posX] = new Pancarte(message);
                         }
-                        case "tresor" -> {
+                        case "tresor" -> { // Permet d'introduire le trésor au bon endroit dans le niveau
                             data = ligne.replace("tresor:", "");
                             posX = Integer.parseInt(data.split(",")[0]);
                             posY = Integer.parseInt(data.split(",")[1]);
@@ -71,7 +71,7 @@ public class Niveau implements Serializable {
                                 case "CristalMagique" -> this.tuiles[posY][posX] = new Tresor(new CristalMagique());
                             }
                         }
-                        case "teleporteur" -> {
+                        case "teleporteur" -> { // Permet d'introduire le téléporteur au bon endroit dans le niveau
                             data = ligne.replace("teleporteur:", "");
                             posX = Integer.parseInt(data.split(",")[0]);
                             posY = Integer.parseInt(data.split(",")[1]);
@@ -80,7 +80,7 @@ public class Niveau implements Serializable {
                             int[] teleportation = {teleportationY, teleportationX};
                             this.tuiles[posY][posX] = new Teleporteur(teleportation);
                         }
-                        case "monstre" -> {
+                        case "monstre" -> {  // Permet d'introduire le.s monstre.s au bon endroit dans le niveau
                             data = ligne.replace("monstre:", "");
                             posX = Integer.parseInt(data.split(",")[0]);
                             posY = Integer.parseInt(data.split(",")[1]);
@@ -154,28 +154,16 @@ public class Niveau implements Serializable {
         return null;
     }
 
+    /**
+     * Cette méthode fait déplacer les monstres dans le niveau en direction du héros
+     * @param plateau plateau du niveau
+     */
     public void bougerMonstres(Tuile[][] plateau) {
         for (int i = 0; i < monstres.size(); i++) {
             monstres.get(i).movement(plateau, heros );
         }
 
 
-    }
-
-    public static Niveau lireBinaire() {
-        Niveau niveau = null;
-        String nomfichier = "partie.sav";
-        ObjectInputStream ois = null;
-
-        try {
-            ois = new ObjectInputStream(new FileInputStream(nomfichier));
-            niveau = (Niveau) ois.readObject();
-            ois.close();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Une erreur est survenue.");
-            System.exit(0);
-        }
-        return niveau;
     }
 
     public int getNumero() {

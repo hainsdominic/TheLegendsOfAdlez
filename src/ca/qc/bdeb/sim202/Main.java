@@ -15,26 +15,29 @@ public class Main {
         Messages.afficherIntro();
 
         do {
-            if (niveau == null && Partie.lireBinaire() != null ) {
+            if (niveau == null && Partie.lireBinaire() != null ) { // Savir si il y a une sauvegarde
                Scanner input = new Scanner(System.in);
                System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde? o pour oui/ n pour non");
                String sauvegarde = input.nextLine();
                try {
                    while (!sauvegarde.equals("o") && !sauvegarde.equals("n")) {
                        System.out.println("Cette commande n'est pas valide, réessayez!");
-                       System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde? o pour oui / n pour non");
-                       sauvegarde = input.nextLine();
+                       System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde?" +
+                               " o pour oui / n pour non");
+                       sauvegarde = input.nextLine(); // Prise de décision de l'utilisateur sur le choix de
+                       // reprendre la partie sauvegardé ou non
                    }
                    if (sauvegarde.equals("o")) {
                        niveau = Partie.lireBinaire();
                    } else {
-                       niveau = new Niveau(numeroNiveau, heros);
+                       niveau = new Niveau(numeroNiveau, heros);// Creer un niveau si l'utilisateur ne veut pas
+                       // reprendre la sauvegarde
                    }
-               } catch (InputMismatchException e) {
+               } catch (InputMismatchException e) {// Si la valeur rentré au clavier n'est pas prise en charge
                    System.out.println("Commande invalide");
                }
 
-            } else {
+            } else { // Si il n'y a pas de sauvegarde, création d'une partie
                 assert niveau != null;
                 if (niveau.getNumero() != numeroNiveau) {
                     niveau = new Niveau(numeroNiveau, heros);
@@ -45,7 +48,7 @@ public class Main {
             afficherEtat(niveau.getHeros());
             afficherPlateau(niveau);
 
-            for (char commande : getCommandes(niveau)) {
+            for (char commande : getCommandes(niveau)) { // Commandes de l'utilisateur exécuté
                 niveau.getHeros().action(commande, niveau.getTuiles(), niveau.getMonstres());
                 niveau.bougerMonstres(niveau.getTuiles());
 
@@ -53,7 +56,8 @@ public class Main {
                     perdue = true;
                 }
 
-                if (niveau.getHeros().getCristaux().size() == numeroNiveau) {
+                if (niveau.getHeros().getCristaux().size() == numeroNiveau) { // Vérifier si tous les crystaux
+                    // ont été récoltés
                     heros = niveau.getHeros();
                     if (numeroNiveau == 6){
                         gagnee = true;
@@ -92,7 +96,7 @@ public class Main {
                 if (!erreur) {
                     listeCoups = coups.toCharArray();
                     for (char coup: listeCoups) {
-                        switch (coup) {
+                        switch (coup) { // Liste de coups permis
                             case 'w':
                             case 'a':
                             case 's':
@@ -100,7 +104,8 @@ public class Main {
                             case 'c':
                             case 'x':
                                 break;
-                            case 'q':
+                            case 'q':// Si l'utilsateur quiite le programme, on lui demande si il souhaite
+                                // sauvegarde sa partie
                                 System.out.println("Voulez-vous sauvegarder la partie? o pour oui/ n pour non");
                                 String sauvegarde = input.nextLine();
                                 try {
@@ -110,7 +115,7 @@ public class Main {
                                         sauvegarde = input.nextLine();
                                     }
                                     if (sauvegarde.equals("o")) {
-                                        Partie.ecrireBinaire(niveau);
+                                        Partie.ecrireBinaire(niveau);// Écrire la sauvegarde dans un fichier binaire
                                         System.out.println("Votre niveau a été sauvegardé!");
                                     }
                                 } catch (InputMismatchException e) {

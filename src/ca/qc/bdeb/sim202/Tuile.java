@@ -6,7 +6,7 @@ public abstract class Tuile implements Serializable {
     boolean marchable;
     char symbole;
 
-    public Tuile(boolean marchable, char symbole) {
+    public Tuile(boolean marchable, char symbole) { // Les tuiles ont un symbole et peuvent être marchables ou non
         this.marchable = marchable;
         this.symbole = symbole;
     }

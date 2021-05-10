@@ -54,32 +54,38 @@ public class Monstre extends Personnage {
         int[] nouvellePosition = {positionMonstre[0], positionMonstre[1]};
         int[] positionHeros = heros.getPosition();
 
-
+        // Si la position du héros est plsu petite en y que celle du monstre
         if (positionHeros[0] < positionMonstre[0]) {
-            if (positionHeros[1] < positionMonstre[1]) {
-                if (plateau[positionMonstre[0]--][positionMonstre[1]--].isMarchable()) {
+            if (positionHeros[1] < positionMonstre[1]) { // Si la position du héros est plus petite que celle
+                // du monstre en x,
+                if (plateau[positionMonstre[0]--][positionMonstre[1]--].isMarchable()) { // Si la case en diagonale est
+                    // disponible pour se rapprocher le plus près du héros
                     nouvellePosition[0]--;
                     super.setPosition(nouvellePosition);
                     nouvellePosition[1]--;
                     super.setPosition(nouvellePosition);
                     interact(plateau, positionHeros, heros);
-                } else if (plateau[positionMonstre[0]][positionMonstre[1]--].isMarchable()) {
+                } else if (plateau[positionMonstre[0]][positionMonstre[1]--].isMarchable()) {// Si la case à gauche
+                    // est disponible pour se rapprocher le plus près du héros
                     nouvellePosition[1]--;
                     super.setPosition(nouvellePosition);
                     interact(plateau, positionHeros, heros);
-                } else if (plateau[positionMonstre[0]--][positionMonstre[1]].isMarchable()) {
+                } else if (plateau[positionMonstre[0]--][positionMonstre[1]].isMarchable()) {// Si la case en haut est
+                    // disponible pour se rapprocher le plus près du héros
                     nouvellePosition[0]--;
                     super.setPosition(nouvellePosition);
                     interact(plateau, positionHeros, heros);
                 }
-            } else if (positionHeros[1] == positionMonstre[1]) {
-                if (plateau[positionMonstre[0]][positionMonstre[1]--].isMarchable()) {
+            } else if (positionHeros[1] == positionMonstre[1]) {// Si la position du monstre et du héros est égale en x
+                if (plateau[positionMonstre[0]][positionMonstre[1]--].isMarchable()) {// Si la case en haut est
+                    // disponible pour se rapprocher le plus près du héros
                     nouvellePosition[0]--;
                     super.setPosition(nouvellePosition);
                     interact(plateau, positionHeros, heros);
                 }
 
-            } else {
+            } else { //Si la postion en x du héros est plus grande que celle du monstre et déplacement du monstre vers
+                // la case qui se rapproche le plus du héros
 
                 if (plateau[positionMonstre[0]--][positionMonstre[1]++].isMarchable()) {
                     nouvellePosition[0]--;
@@ -98,7 +104,8 @@ public class Monstre extends Personnage {
                 }
             }
 
-        } else if (positionHeros[0] == positionMonstre[0]) {
+        } else if (positionHeros[0] == positionMonstre[0]) { // Quand la position du mosntre et du héros
+            // sont pareils en y
             if (positionHeros[1] < positionMonstre[1]) {
                 if (plateau[positionMonstre[0]][positionMonstre[1]--].isMarchable()) {
                     nouvellePosition[1]--;
@@ -116,7 +123,8 @@ public class Monstre extends Personnage {
                 }
             }
 
-        } else {
+        } else { // Quand la position du héros est plus grande en x que celle du monstre et déplacement du
+            // monstre vers la case qui se rapproche le plus du héros
             if (positionHeros[1] > positionMonstre[1]) {
                 if (plateau[positionMonstre[0]++][positionMonstre[1]++].isMarchable()) {
                     nouvellePosition[0]++;
@@ -140,7 +148,7 @@ public class Monstre extends Personnage {
                     interact(plateau, positionHeros, heros);
                 }
 
-            } else {
+            } else {// Déplacement du monstre vers la case qui se rapproche le plus du héros
 
                 if (plateau[positionMonstre[0]++][positionMonstre[1]--].isMarchable()) {
                     nouvellePosition[0]++;
@@ -164,27 +172,27 @@ public class Monstre extends Personnage {
     @Override
     public int getVie() {
         return super.getVie();
-    }
+    } // Retourne la vie du monstre
 
     @Override
     public int getForce() {
         return super.getForce();
-    }
+    } //Retourne la force du monstre
 
     @Override
     public void setVie(int vie) {
         super.setVie(vie);
-    }
+    } // Set la vie du monstre
 
 
     @Override
     public void setPosition(int[] position) {
         super.setPosition(position);
-    }
+    } // Set la position du monstre
 
     @Override
     public int[] getPosition() {
         return super.getPosition();
-    }
+    } // Retourne la position du monstre
 
 }
