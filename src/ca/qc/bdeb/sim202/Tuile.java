@@ -1,6 +1,8 @@
 package ca.qc.bdeb.sim202;
 
-public abstract class Tuile {
+import java.io.Serializable;
+
+public abstract class Tuile implements Serializable {
     boolean marchable;
     char symbole;
 

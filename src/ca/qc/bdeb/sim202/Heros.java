@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim202;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -116,7 +117,6 @@ public class Heros extends Personnage {
     public void attaque(int[] positionHeros, ArrayList<Monstre> monstres) {
 
         for (Monstre monstre : monstres) {
-            System.out.println(monstre.getVie());
             int[] position = monstre.getPosition();
             if (position[0] == positionHeros[0] && position[1] == positionHeros[1]) {
                 monstre.setVie(monstre.getVie() - getForce());

@@ -15,28 +15,30 @@ public class Main {
         Messages.afficherIntro();
 
         do {
-          /* if (lireBinaire() != null ) {
+            if (Partie.lireBinaire() != null ) {
                Scanner input = new Scanner(System.in);
                System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde? o pour oui/ n pour non");
                String sauvegarde = input.nextLine();
                try {
-                   while (sauvegarde != "o" || sauvegarde != "n") {
+                   while (!sauvegarde.equals("o") && !sauvegarde.equals("n")) {
                        System.out.println("Cette commande n'est pas valide, réessayez!");
                        System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde? o pour oui / n pour non");
                        sauvegarde = input.nextLine();
                    }
                    if (sauvegarde.equals("o")) {
-                       ecrireBinaire(niveau);
-                   } else if (sauvegarde.equals("n")) {
+                       niveau = Partie.lireBinaire();
+                   } else {
                        niveau = new Niveau(numeroNiveau, heros);
                    }
                } catch (InputMismatchException e) {
                    System.out.println("Commande invalide");
                }
 
-           } else */if (niveau == null || niveau.getNumero() != numeroNiveau) {
+            } else if (niveau == null || niveau.getNumero() != numeroNiveau) {
                 niveau = new Niveau(numeroNiveau, heros);
             }
+
+            assert niveau != null;
             afficherEtat(niveau.getHeros());
             afficherPlateau(niveau);
 
@@ -105,7 +107,7 @@ public class Main {
                                         sauvegarde = input.nextLine();
                                     }
                                     if (sauvegarde.equals("o")) {
-                                        ecrireBinaire(niveau);
+                                        Partie.ecrireBinaire(niveau);
                                         System.out.println("Votre niveau a été sauvegardé!");
                                     }
                                 } catch (InputMismatchException e) {
@@ -167,40 +169,6 @@ public class Main {
         int force = heros.getForce();
         int nbCristaux = heros.getCristaux().size();
         System.out.println("Vies: "+vie+" Force: " +force+" Cristaux: "+heros.getCristaux().size());
-    }
-
-    public static void ecrireBinaire(Niveau partie) {
-        File file = new File("partie.sav");
-        ObjectOutputStream oos = null;
-        FileOutputStream fos = null;
-
-        try {
-            fos = new FileOutputStream(file, false);
-            oos = new ObjectOutputStream(fos);
-            oos.writeObject(partie);
-            oos.flush();
-            oos.close();
-        } catch (IOException e) {
-            System.out.println("Erreur");
-            System.exit(1);
-        }
-        System.exit(0);
-    }
-
-    public static Niveau lireBinaire() {
-        Niveau niveau = null;
-        String nomfichier = "partie.sav";
-        ObjectInputStream ois = null;
-
-        try {
-            ois = new ObjectInputStream(new FileInputStream(nomfichier));
-            niveau = (Niveau) ois.readObject();
-            ois.close();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Une erreur est survenue.");
-            System.exit(0);
-        }
-        return niveau;
     }
 
 }

@@ -1,5 +1,7 @@
 package ca.qc.bdeb.sim202;
 
+import java.io.Serializable;
+
 public class Monstre extends Personnage {
 
     public Monstre(int[] position, int vie, int force) {
@@ -77,7 +79,7 @@ public class Monstre extends Personnage {
                     interact(plateau, positionHeros, heros);
                 }
 
-            } else if (positionHeros[1] > positionMonstre[1]) {
+            } else {
 
                 if (plateau[positionMonstre[0]--][positionMonstre[1]++].isMarchable()) {
                     nouvellePosition[0]--;
@@ -106,7 +108,7 @@ public class Monstre extends Personnage {
             } else if (positionHeros[1] == positionMonstre[1]) {
                 //Ne bouge pas, si sur la même case
                 interact(plateau, positionHeros, heros);
-            } else if (positionHeros[1] > positionMonstre[1]) {
+            } else {
                 if (plateau[positionMonstre[0]][positionMonstre[1]++].isMarchable()) {
                     nouvellePosition[1]++;
                     super.setPosition(nouvellePosition);
@@ -114,7 +116,7 @@ public class Monstre extends Personnage {
                 }
             }
 
-        } else if (positionHeros[0] > positionMonstre[0]) {
+        } else {
             if (positionHeros[1] > positionMonstre[1]) {
                 if (plateau[positionMonstre[0]++][positionMonstre[1]++].isMarchable()) {
                     nouvellePosition[0]++;
@@ -138,7 +140,7 @@ public class Monstre extends Personnage {
                     interact(plateau, positionHeros, heros);
                 }
 
-            } else if (positionHeros[1] < positionMonstre[1]) {
+            } else {
 
                 if (plateau[positionMonstre[0]++][positionMonstre[1]--].isMarchable()) {
                     nouvellePosition[0]++;
