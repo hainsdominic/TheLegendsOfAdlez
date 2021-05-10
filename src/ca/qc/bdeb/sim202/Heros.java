@@ -23,7 +23,7 @@ public class Heros extends Personnage {
      * @param coup touche choisie
      * @param plateau plateau de jeu
      */
-    public void action(char coup, Tuile[][] plateau, ArrayList<Monstre> monstre) {
+    public void action(char coup, Tuile[][] plateau, ArrayList<Monstre> monstres) {
         int[] position = super.getPosition();
         int[] nouvellePosition = {position[0], position[1]};
         switch (coup) {
@@ -52,9 +52,9 @@ public class Heros extends Personnage {
                 }
                 break;
             case 'c':
-                interaction(plateau, position, monstre);
+                interaction(plateau, position, monstres);
                 break;
-            case 'x':
+            case 'x': attaque(plateau, position, monstres);
                 break;
         }
     }
@@ -113,7 +113,7 @@ public class Heros extends Personnage {
                 }
             }
         }
-        attaque(plateau, position, monstres);
+
     }
 
     public void attaque(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstres) {

@@ -1,7 +1,5 @@
 package ca.qc.bdeb.sim202;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -17,14 +15,32 @@ public class Main {
         Messages.afficherIntro();
 
         do {
-           // niveau = serialiazer();
-            if (niveau == null || niveau.getNumero() != numeroNiveau) {
+          /* if (lireBinaire() != null ) {
+               Scanner input = new Scanner(System.in);
+               System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde? o pour oui/ n pour non");
+               String sauvegarde = input.nextLine();
+               try {
+                   while (sauvegarde != "o" || sauvegarde != "n") {
+                       System.out.println("Cette commande n'est pas valide, réessayez!");
+                       System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde? o pour oui / n pour non");
+                       sauvegarde = input.nextLine();
+                   }
+                   if (sauvegarde.equals("o")) {
+                       ecrireBinaire(niveau);
+                   } else if (sauvegarde.equals("n")) {
+                       niveau = new Niveau(numeroNiveau, heros);
+                   }
+               } catch (InputMismatchException e) {
+                   System.out.println("Commande invalide");
+               }
+
+           } else */if (niveau == null || niveau.getNumero() != numeroNiveau) {
                 niveau = new Niveau(numeroNiveau, heros);
             }
             afficherEtat(niveau.getHeros());
             afficherPlateau(niveau);
 
-            for (char commande : getCommandes()) {
+            for (char commande : getCommandes(niveau)) {
                 niveau.getHeros().action(commande, niveau.getTuiles(), niveau.getMonstres());
                 niveau.bougerMonstres(niveau.getTuiles());
 
@@ -55,7 +71,7 @@ public class Main {
      * Demande a l'utilisateur les commandes et les verifies
      * @return la liste des commandes entrees par l'utilisateur
      */
-    public static char[] getCommandes() {
+    public static char[] getCommandes(Niveau niveau) {
         boolean erreur = true;
         char[] listeCoups = null;
         do{ //get les mouvements de l'utilisateur
@@ -80,19 +96,20 @@ public class Main {
                             case 'x':
                                 break;
                             case 'q':
-                                System.out.println("Sauvegarde de la partie!");
+                                System.out.println("Voulez-vous sauvegarder la partie? o pour oui/ n pour non");
+                                String sauvegarde = input.nextLine();
                                 try {
-                                    ObjectOutputStream ecrire =
-                                            new ObjectOutputStream(new FileOutputStream("Zelda.dat"));
-                                   // ecrire.writeObject(niveau);
-
-                                    ecrire.close();
-                                } catch (IOException e) {
-                                    System.out.println("Erreur d'entrées-sorties");
-
-                                //} catch (ClassNotFoundException e) {
-                                    System.out.println("Erreur classe introuvable");
-
+                                    while (!sauvegarde.equals("o") && !sauvegarde.equals("n")) {
+                                        System.out.println("Cette commande n'est pas valide, réessayez!");
+                                        System.out.println("Voulez-vous sauvegarder la partie? o pour oui/ n pour non");
+                                        sauvegarde = input.nextLine();
+                                    }
+                                    if (sauvegarde.equals("o")) {
+                                        ecrireBinaire(niveau);
+                                        System.out.println("Votre niveau a été sauvegardé!");
+                                    }
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Commande invalide");
                                 }
                                 System.exit(0);
                                 break;
@@ -152,5 +169,38 @@ public class Main {
         System.out.println("Vies: "+vie+" Force: " +force+" Cristaux: "+heros.getCristaux().size());
     }
 
+    public static void ecrireBinaire(Niveau partie) {
+        File file = new File("partie.sav");
+        ObjectOutputStream oos = null;
+        FileOutputStream fos = null;
+
+        try {
+            fos = new FileOutputStream(file, false);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(partie);
+            oos.flush();
+            oos.close();
+        } catch (IOException e) {
+            System.out.println("Erreur");
+            System.exit(1);
+        }
+        System.exit(0);
+    }
+
+    public static Niveau lireBinaire() {
+        Niveau niveau = null;
+        String nomfichier = "partie.sav";
+        ObjectInputStream ois = null;
+
+        try {
+            ois = new ObjectInputStream(new FileInputStream(nomfichier));
+            niveau = (Niveau) ois.readObject();
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Une erreur est survenue.");
+            System.exit(0);
+        }
+        return niveau;
+    }
 
 }

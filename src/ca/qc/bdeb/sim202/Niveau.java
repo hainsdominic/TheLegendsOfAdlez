@@ -1,8 +1,6 @@
 package ca.qc.bdeb.sim202;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -162,6 +160,22 @@ public class Niveau implements Serializable {
         }
 
 
+    }
+
+    public static Niveau lireBinaire() {
+        Niveau niveau = null;
+        String nomfichier = "partie.sav";
+        ObjectInputStream ois = null;
+
+        try {
+            ois = new ObjectInputStream(new FileInputStream(nomfichier));
+            niveau = (Niveau) ois.readObject();
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Une erreur est survenue.");
+            System.exit(0);
+        }
+        return niveau;
     }
 
     public int getNumero() {

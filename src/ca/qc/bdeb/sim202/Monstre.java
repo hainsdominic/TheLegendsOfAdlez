@@ -42,6 +42,8 @@ public class Monstre extends Personnage {
      * Cette méthode appartenant à la classe Monstre fait avancer le monstre en direction du héros,
      * soit en diagonale, soit verticalement, soit horizontalement et le monstre peut interagir avec le héros
      * si il est suffisament près de lui.
+     * 0 = axe des y
+     * 1 = axe des x
      * @param plateau plateau du niveau
      * @param heros héros du niveau
      */
