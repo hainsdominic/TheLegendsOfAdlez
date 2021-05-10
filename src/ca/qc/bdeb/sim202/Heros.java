@@ -27,35 +27,32 @@ public class Heros extends Personnage {
         int[] position = super.getPosition();
         int[] nouvellePosition = {position[0], position[1]};
         switch (coup) {
-            case 'w':
+            case 'w' -> {
                 nouvellePosition[0]--;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
-                break;
-            case 'a':
+            }
+            case 'a' -> {
                 nouvellePosition[1]--;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
-                break;
-            case 's':
+            }
+            case 's' -> {
                 nouvellePosition[0]++;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
-                break;
-            case 'd':
+            }
+            case 'd' -> {
                 nouvellePosition[1]++;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
-                break;
-            case 'c':
-                interaction(plateau, position, monstres);
-                break;
-            case 'x': attaque(plateau, position, monstres);
-                break;
+            }
+            case 'c' -> interaction(plateau, position, monstres);
+            case 'x' -> attaque(position, monstres);
         }
     }
 
@@ -116,17 +113,54 @@ public class Heros extends Personnage {
 
     }
 
-    public void attaque(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstres) {
+    public void attaque(int[] positionHeros, ArrayList<Monstre> monstres) {
 
-        int[] herosPosition = getPosition();
-
-        monstres.forEach((monstre) -> {
-            if ( ((herosPosition[0] - monstre.getPosition()[0]) <= 1 && 1 >= (monstre.getPosition()[0] - herosPosition[0]))
-                    && ((herosPosition[1] - monstre.getPosition()[1]) <= 1 && 1 >= (monstre.getPosition()[1] - herosPosition[1])) ) {
-                monstre.setVie(monstre.getVie()-getForce());
-
+        for (Monstre monstre : monstres) {
+            System.out.println(monstre.getVie());
+            int[] position = monstre.getPosition();
+            if (position[0] == positionHeros[0] && position[1] == positionHeros[1]) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
             }
-        });
+            if (position[0] == positionHeros[0] - 1 && position[1] == positionHeros[1]) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] + 1 && position[1] == positionHeros[1]) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] && position[1] == positionHeros[1] - 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] && position[1] == positionHeros[1] + 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] + 1 && position[1] == positionHeros[1] + 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] - 1 && position[1] == positionHeros[1] - 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] - 1 && position[1] == positionHeros[1] + 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] + 1 && position[1] == positionHeros[1] - 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+        }
+        for (int i = 0, monstresSize = monstres.size(); i < monstresSize; i++) {
+            Monstre monstre = monstres.get(i);
+            if (monstre.getVie() == 0) {
+                monstres.remove(i);
+            }
+        }
     }
 
 }
