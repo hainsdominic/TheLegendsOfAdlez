@@ -15,7 +15,7 @@ public class Main {
         Messages.afficherIntro();
 
         do {
-            if (Partie.lireBinaire() != null ) {
+            if (niveau == null && Partie.lireBinaire() != null ) {
                Scanner input = new Scanner(System.in);
                System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde? o pour oui/ n pour non");
                String sauvegarde = input.nextLine();
@@ -34,8 +34,11 @@ public class Main {
                    System.out.println("Commande invalide");
                }
 
-            } else if (niveau == null || niveau.getNumero() != numeroNiveau) {
-                niveau = new Niveau(numeroNiveau, heros);
+            } else {
+                assert niveau != null;
+                if (niveau.getNumero() != numeroNiveau) {
+                    niveau = new Niveau(numeroNiveau, heros);
+                }
             }
 
             assert niveau != null;
