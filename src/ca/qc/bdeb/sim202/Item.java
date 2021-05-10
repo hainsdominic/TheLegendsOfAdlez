@@ -1,5 +1,8 @@
 package ca.qc.bdeb.sim202;
 
-public abstract class Item {
+import java.io.Serializable;
+
+public abstract class Item implements Serializable {
     public abstract String getType();
+    public abstract String getInfo();
 }

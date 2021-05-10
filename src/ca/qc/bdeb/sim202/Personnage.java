@@ -1,6 +1,8 @@
 package ca.qc.bdeb.sim202;
 
-public abstract class Personnage {
+import java.io.Serializable;
+
+public abstract class Personnage implements Serializable {
     private int vie;
     private int force;
     private int[] position;

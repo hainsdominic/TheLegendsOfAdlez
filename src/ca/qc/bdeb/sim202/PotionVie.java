@@ -6,4 +6,5 @@ public class PotionVie extends Item{
     public String getType() {
         return "PotionVie";
     }
+    public String getInfo() { return "Vous avez trouvé une potion de vie";}
 }

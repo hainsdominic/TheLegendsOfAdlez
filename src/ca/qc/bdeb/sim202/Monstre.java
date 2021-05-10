@@ -1,5 +1,7 @@
 package ca.qc.bdeb.sim202;
 
+import java.io.Serializable;
+
 public class Monstre extends Personnage {
 
     public Monstre(int[] position, int vie, int force) {
@@ -8,16 +10,155 @@ public class Monstre extends Personnage {
 
     // @Override ?
     public void deplacer() {
-        /*
-        Si Adlez est dans une des 9 cases avoisinantes (8 cases voisines + la case sur laquelle le monstrese trouve), attaquer Adlez
-        Si Adlez est plus loin, avancer vers elle :
-            – Regarder la coordonnée x du monstre et calculer le déplacement horizontal deplacementX
-            à faire pour se rapprocher de Adlez
-                ∗ Si Adlez est à droite, deplacementX = +1
-                ∗ Si Adlez est à gauche, deplacementX = −1
-            – Regarder la coordonnée y et calculer le déplacement vertical deplacementY similairement
-            – Si la case (
-        */
+
+
+    }
+
+    /**
+     * Cette méthode appartenant à la classe Monstre vérifie les alentours dans un périmètre de 1
+     *
+     * @param plateau  plateau du niveau
+     * @param position position du héros
+     * @param heros    héros du niveau
+     */
+    public void interact(Tuile[][] plateau, int[] position, Heros heros) {
+        int[] herosPosition = heros.getPosition();
+        int[] monstrePosition = getPosition();
+
+        if (((herosPosition[0] - monstrePosition[0]) <= 1 && 1 >= (monstrePosition[0] - herosPosition[0]))
+                && ((herosPosition[1] - monstrePosition[1]) <= 1 && 1 >= (monstrePosition[1] - herosPosition[1]))) {
+            attaque(heros);
+        }
+    }
+
+    /**
+     * Attaque des monstres sur le héros
+     * @param heros héros du niveau
+     */
+    private void attaque(Heros heros) {
+        heros.setVie((heros.getVie() - getForce()));
+
+    }
+
+    /**
+     * Cette méthode appartenant à la classe Monstre fait avancer le monstre en direction du héros,
+     * soit en diagonale, soit verticalement, soit horizontalement et le monstre peut interagir avec le héros
+     * si il est suffisament près de lui.
+     * 0 = axe des y
+     * 1 = axe des x
+     * @param plateau plateau du niveau
+     * @param heros héros du niveau
+     */
+    public void movement(Tuile[][] plateau, Heros heros) {
+        int[] positionMonstre = super.getPosition();
+        int[] nouvellePosition = {positionMonstre[0], positionMonstre[1]};
+        int[] positionHeros = heros.getPosition();
+
+
+        if (positionHeros[0] < positionMonstre[0]) {
+            if (positionHeros[1] < positionMonstre[1]) {
+                if (plateau[positionMonstre[0]--][positionMonstre[1]--].isMarchable()) {
+                    nouvellePosition[0]--;
+                    super.setPosition(nouvellePosition);
+                    nouvellePosition[1]--;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                } else if (plateau[positionMonstre[0]][positionMonstre[1]--].isMarchable()) {
+                    nouvellePosition[1]--;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                } else if (plateau[positionMonstre[0]--][positionMonstre[1]].isMarchable()) {
+                    nouvellePosition[0]--;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                }
+            } else if (positionHeros[1] == positionMonstre[1]) {
+                if (plateau[positionMonstre[0]][positionMonstre[1]--].isMarchable()) {
+                    nouvellePosition[0]--;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                }
+
+            } else {
+
+                if (plateau[positionMonstre[0]--][positionMonstre[1]++].isMarchable()) {
+                    nouvellePosition[0]--;
+                    super.setPosition(nouvellePosition);
+                    nouvellePosition[1]++;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                } else if (plateau[positionMonstre[0]][positionMonstre[1]++].isMarchable()) {
+                    nouvellePosition[1]++;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                } else if (plateau[positionMonstre[0]--][positionMonstre[1]].isMarchable()) {
+                    nouvellePosition[0]--;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                }
+            }
+
+        } else if (positionHeros[0] == positionMonstre[0]) {
+            if (positionHeros[1] < positionMonstre[1]) {
+                if (plateau[positionMonstre[0]][positionMonstre[1]--].isMarchable()) {
+                    nouvellePosition[1]--;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                }
+            } else if (positionHeros[1] == positionMonstre[1]) {
+                //Ne bouge pas, si sur la même case
+                interact(plateau, positionHeros, heros);
+            } else {
+                if (plateau[positionMonstre[0]][positionMonstre[1]++].isMarchable()) {
+                    nouvellePosition[1]++;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                }
+            }
+
+        } else {
+            if (positionHeros[1] > positionMonstre[1]) {
+                if (plateau[positionMonstre[0]++][positionMonstre[1]++].isMarchable()) {
+                    nouvellePosition[0]++;
+                    super.setPosition(nouvellePosition);
+                    nouvellePosition[1]++;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                } else if (plateau[positionMonstre[0]][positionMonstre[1]++].isMarchable()) {
+                    nouvellePosition[1]++;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                } else if (plateau[positionMonstre[0]++][positionMonstre[1]].isMarchable()) {
+                    nouvellePosition[0]++;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                }
+            } else if (positionHeros[1] == positionMonstre[1]) {
+                if (plateau[positionMonstre[0]--][positionMonstre[1]].isMarchable()) {
+                    nouvellePosition[0]++;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                }
+
+            } else {
+
+                if (plateau[positionMonstre[0]++][positionMonstre[1]--].isMarchable()) {
+                    nouvellePosition[0]++;
+                    super.setPosition(nouvellePosition);
+                    nouvellePosition[1]--;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                } else if (plateau[positionMonstre[0]][positionMonstre[1]--].isMarchable()) {
+                    nouvellePosition[1]--;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                } else if (plateau[positionMonstre[0]++][positionMonstre[1]].isMarchable()) {
+                    nouvellePosition[0]++;
+                    super.setPosition(nouvellePosition);
+                    interact(plateau, positionHeros, heros);
+                }
+            }
+        }
     }
 
     @Override

@@ -5,4 +5,6 @@ public class PotionForce extends Item{
     public String getType() {
         return "PotionForce";
     }
+    public String getInfo() { return "Vous avez trouvé une potion de force"; }
+
 }

@@ -1,11 +1,10 @@
 package ca.qc.bdeb.sim202;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Niveau {
+public class Niveau implements Serializable {
     // numero du niveau
     private int numero;
     // liste de tuiles
@@ -155,8 +154,28 @@ public class Niveau {
         return null;
     }
 
-    public void bougerMonstres() {
+    public void bougerMonstres(Tuile[][] plateau) {
+        for (int i = 0; i < monstres.size(); i++) {
+            monstres.get(i).movement(plateau, heros );
+        }
 
+
+    }
+
+    public static Niveau lireBinaire() {
+        Niveau niveau = null;
+        String nomfichier = "partie.sav";
+        ObjectInputStream ois = null;
+
+        try {
+            ois = new ObjectInputStream(new FileInputStream(nomfichier));
+            niveau = (Niveau) ois.readObject();
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Une erreur est survenue.");
+            System.exit(0);
+        }
+        return niveau;
     }
 
     public int getNumero() {

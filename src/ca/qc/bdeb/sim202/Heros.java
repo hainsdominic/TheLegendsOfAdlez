@@ -1,6 +1,8 @@
 package ca.qc.bdeb.sim202;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Heros extends Personnage {
     private ArrayList<CristalMagique> cristaux = new ArrayList<>();
@@ -22,39 +24,36 @@ public class Heros extends Personnage {
      * @param coup touche choisie
      * @param plateau plateau de jeu
      */
-    public void action(char coup, Tuile[][] plateau) {
+    public void action(char coup, Tuile[][] plateau, ArrayList<Monstre> monstres) {
         int[] position = super.getPosition();
         int[] nouvellePosition = {position[0], position[1]};
         switch (coup) {
-            case 'w':
+            case 'w' -> {
                 nouvellePosition[0]--;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
-                break;
-            case 'a':
+            }
+            case 'a' -> {
                 nouvellePosition[1]--;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
-                break;
-            case 's':
+            }
+            case 's' -> {
                 nouvellePosition[0]++;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
-                break;
-            case 'd':
+            }
+            case 'd' -> {
                 nouvellePosition[1]++;
                 if (plateau[nouvellePosition[0]][nouvellePosition[1]].isMarchable()) {
                     super.setPosition(nouvellePosition);
                 }
-                break;
-            case 'c':
-                interaction(plateau, position);
-                break;
-            case 'x':
-                break;
+            }
+            case 'c' -> interaction(plateau, position, monstres);
+            case 'x' -> attaque(position, monstres);
         }
     }
 
@@ -63,7 +62,7 @@ public class Heros extends Personnage {
      * @param plateau plateau de jeu
      * @param position position du heros
      */
-    private void interaction(Tuile[][] plateau, int[] position) {
+    private void interaction(Tuile[][] plateau, int[] position, ArrayList<Monstre> monstres) {
         //faire un array de toutes les cases autour
         Tuile[] tuilesProche = new Tuile[9];
         tuilesProche[0] = plateau[position[0]+1][position[1]+1];
@@ -83,17 +82,19 @@ public class Heros extends Personnage {
                     // si c'est un tresor on get l'item
                     // et on utilise l'item
                     Tresor tresor = (Tresor) tuile;
+
                     switch (tresor.getItem().getType()) {
                         case "CristalMagique" -> {
-                            System.out.println("Le tresor contient un cristal magique, prochain niveau!");
+                            System.out.println(tresor.getItem().getInfo());
                             this.ajouterCristal((CristalMagique) tresor.getItem());
                         }
                         case "PotionVie" -> {
-                            System.out.println("Le tresor contient une potion de vie");
+                            System.out.println(tresor.getItem().getInfo());
                             this.setVie(6);
                         }
                         case "PotionForce" -> {
                             System.out.println("Le tresor contient une potion de force");
+                            System.out.println(tresor.getItem().getInfo());
                             this.setForce(getForce() + 1);
                         }
                     }
@@ -109,7 +110,60 @@ public class Heros extends Personnage {
                     super.setPosition(teleporteur.getPosition());
                 }
             }
-
         }
+
     }
+
+    public void attaque(int[] positionHeros, ArrayList<Monstre> monstres) {
+
+        for (Monstre monstre : monstres) {
+            int[] position = monstre.getPosition();
+            if (position[0] == positionHeros[0] && position[1] == positionHeros[1]) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] - 1 && position[1] == positionHeros[1]) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] + 1 && position[1] == positionHeros[1]) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] && position[1] == positionHeros[1] - 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] && position[1] == positionHeros[1] + 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] + 1 && position[1] == positionHeros[1] + 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] - 1 && position[1] == positionHeros[1] - 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] - 1 && position[1] == positionHeros[1] + 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+            if (position[0] == positionHeros[0] + 1 && position[1] == positionHeros[1] - 1) {
+                monstre.setVie(monstre.getVie() - getForce());
+                break;
+            }
+        }
+        if (!(monstres.size() == 0)) {
+            for (int i = 0; i < monstres.size(); i++) {
+                Monstre monstre = monstres.get(i);
+                if (monstre.getVie() == 0) {
+                    monstres.remove(i);
+                }
+            }
+        }
+
+    }
+
 }

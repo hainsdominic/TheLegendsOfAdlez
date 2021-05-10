@@ -1,4 +1,5 @@
 package ca.qc.bdeb.sim202;
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,15 +15,36 @@ public class Main {
         Messages.afficherIntro();
 
         do {
-            if (niveau == null || niveau.getNumero() != numeroNiveau) {
+            if (Partie.lireBinaire() != null ) {
+               Scanner input = new Scanner(System.in);
+               System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde? o pour oui/ n pour non");
+               String sauvegarde = input.nextLine();
+               try {
+                   while (!sauvegarde.equals("o") && !sauvegarde.equals("n")) {
+                       System.out.println("Cette commande n'est pas valide, réessayez!");
+                       System.out.println("Souhaitez reprendre à partir de la dernière sauvegarde? o pour oui / n pour non");
+                       sauvegarde = input.nextLine();
+                   }
+                   if (sauvegarde.equals("o")) {
+                       niveau = Partie.lireBinaire();
+                   } else {
+                       niveau = new Niveau(numeroNiveau, heros);
+                   }
+               } catch (InputMismatchException e) {
+                   System.out.println("Commande invalide");
+               }
+
+            } else if (niveau == null || niveau.getNumero() != numeroNiveau) {
                 niveau = new Niveau(numeroNiveau, heros);
             }
+
+            assert niveau != null;
             afficherEtat(niveau.getHeros());
             afficherPlateau(niveau);
 
-            for (char commande : getCommandes()) {
-                niveau.getHeros().action(commande, niveau.getTuiles());
-                niveau.bougerMonstres();
+            for (char commande : getCommandes(niveau)) {
+                niveau.getHeros().action(commande, niveau.getTuiles(), niveau.getMonstres());
+                niveau.bougerMonstres(niveau.getTuiles());
 
                 if (niveau.getHeros().getVie() < 1) { //check si adlez est encore vivant
                     perdue = true;
@@ -51,7 +73,7 @@ public class Main {
      * Demande a l'utilisateur les commandes et les verifies
      * @return la liste des commandes entrees par l'utilisateur
      */
-    public static char[] getCommandes() {
+    public static char[] getCommandes(Niveau niveau) {
         boolean erreur = true;
         char[] listeCoups = null;
         do{ //get les mouvements de l'utilisateur
@@ -76,6 +98,21 @@ public class Main {
                             case 'x':
                                 break;
                             case 'q':
+                                System.out.println("Voulez-vous sauvegarder la partie? o pour oui/ n pour non");
+                                String sauvegarde = input.nextLine();
+                                try {
+                                    while (!sauvegarde.equals("o") && !sauvegarde.equals("n")) {
+                                        System.out.println("Cette commande n'est pas valide, réessayez!");
+                                        System.out.println("Voulez-vous sauvegarder la partie? o pour oui/ n pour non");
+                                        sauvegarde = input.nextLine();
+                                    }
+                                    if (sauvegarde.equals("o")) {
+                                        Partie.ecrireBinaire(niveau);
+                                        System.out.println("Votre niveau a été sauvegardé!");
+                                    }
+                                } catch (InputMismatchException e) {
+                                    System.out.println("Commande invalide");
+                                }
                                 System.exit(0);
                                 break;
                             default:
@@ -133,6 +170,5 @@ public class Main {
         int nbCristaux = heros.getCristaux().size();
         System.out.println("Vies: "+vie+" Force: " +force+" Cristaux: "+heros.getCristaux().size());
     }
-
 
 }

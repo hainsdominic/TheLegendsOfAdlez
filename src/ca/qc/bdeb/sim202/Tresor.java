@@ -9,6 +9,7 @@ public class Tresor extends Tuile {
     }
 
     public Item getItem() {
+        super.setSymbole('_');
         return item;
     }
 }
